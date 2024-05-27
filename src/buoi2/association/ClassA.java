@@ -9,10 +9,14 @@ public class ClassA {
     ClassA(ClassB bRemote){//bRemote: local variable
         this.bRemote = bRemote;
     }
-    public void methodA() {
 
-        bRemote.methodB();
-        
+    ClassA(){}
+
+    public void setBRmemote(ClassB bRemote) {
+        this.bRemote = bRemote;
+    }
+    public void methodA() {
+        bRemote.methodB();//messsage
     }
 
    
