@@ -6,7 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CalcualtorWindow extends JFrame{
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CalcualtorWindow extends JFrame implements ActionListener{
 
     //field
     private String title;
@@ -29,10 +32,31 @@ public class CalcualtorWindow extends JFrame{
         jPanel = new JPanel();
         jLabelInput1 = new JLabel("input1");
         jTextFieldInput1 = new JTextField(10);
+        jLabelInput2 = new JLabel("input 2");
+        jTextFieldInput2 = new JTextField(10);
+        jLabelOutput = new JLabel("output:");
+        addButton = new JButton("ADD");
+        addButton.addActionListener(this);// this === Remote của Calculator Window
+
+
 
         jPanel.add(jLabelInput1);
         jPanel.add(jTextFieldInput1);
+        jPanel.add(jLabelInput2);
+        jPanel.add(jTextFieldInput2);
+        jPanel.add(jLabelOutput);
+        jPanel.add(addButton);
         
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        double num1 = Double.parseDouble(jTextFieldInput1.getText());
+        double num2 = Double.parseDouble(jTextFieldInput2.getText());
+        double outputNum = num1 + num2;
+        jLabelOutput.setText("" + outputNum);
+
+       
     }
 
 }
