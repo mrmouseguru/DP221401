@@ -23,6 +23,7 @@ public class CalcualtorWindow extends JFrame implements ActionListener {
         buildPanel();
         add(jPanel);
         title = "Frame Viewer";
+        setTitle(title);
         setSize(400, 400);
         setVisible(true);
     }
