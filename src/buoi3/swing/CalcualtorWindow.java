@@ -9,18 +9,17 @@ import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CalcualtorWindow extends JFrame implements ActionListener{
+public class CalcualtorWindow extends JFrame implements ActionListener {
 
-    //field
+    // field
     private String title;
     private JPanel jPanel;
     private JLabel jLabelInput1, jLabelInput2, jLabelOutput;
     private JTextField jTextFieldInput1, jTextFieldInput2;
     private JButton addButton, mulButton, subButton, divButton;
 
-
-    //function ,method
-    CalcualtorWindow(){
+    // function ,method
+    CalcualtorWindow() {
         buildPanel();
         add(jPanel);
         title = "Frame Viewer";
@@ -37,8 +36,8 @@ public class CalcualtorWindow extends JFrame implements ActionListener{
         jLabelOutput = new JLabel("output:");
         addButton = new JButton("ADD");
         addButton.addActionListener(this);// this === Remote của Calculator Window
-
-
+        subButton = new JButton("SUB");
+        subButton.addActionListener(this);
 
         jPanel.add(jLabelInput1);
         jPanel.add(jTextFieldInput1);
@@ -46,17 +45,24 @@ public class CalcualtorWindow extends JFrame implements ActionListener{
         jPanel.add(jTextFieldInput2);
         jPanel.add(jLabelOutput);
         jPanel.add(addButton);
-        
+        jPanel.add(subButton);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         double num1 = Double.parseDouble(jTextFieldInput1.getText());
         double num2 = Double.parseDouble(jTextFieldInput2.getText());
-        double outputNum = num1 + num2;
-        jLabelOutput.setText("" + outputNum);
 
-       
+        String command = e.getActionCommand();
+        if (command.equals("ADD")) {
+            double outputNum = num1 + num2;
+            jLabelOutput.setText("" + outputNum);
+        } else if (command.equals("SUB")) {
+            double outputNum = num1 - num2;
+            jLabelOutput.setText("" + outputNum);
+        }
+
     }
 
 }
