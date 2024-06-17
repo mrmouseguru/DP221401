@@ -20,24 +20,9 @@ public class CalcualtorBoundary extends JFrame {
     private CalculatorEntity calculatorModelRemote;
     private CalculatorControl calculatorControlRemote;
 
-    public JLabel getjLabelOutput() {
-        return jLabelOutput;
-    }
-
-    public CalculatorEntity getCalculatorModelRemote() {
-        return calculatorModelRemote;
-    }
-    public JTextField getjTextFieldInput1() {
-        return jTextFieldInput1;
-    }
-
-    public JTextField getjTextFieldInput2() {
-        return jTextFieldInput2;
-    }
-
     // function ,method
     CalcualtorBoundary() {
-        calculatorControlRemote = new CalculatorControl(this);
+        calculatorControlRemote = new CalculatorControl();
         buildPanel();
         add(jPanel);
         title = "Frame Viewer";
@@ -69,5 +54,29 @@ public class CalcualtorBoundary extends JFrame {
 
     }
 
-   
+    class CalculatorControl implements ActionListener {
+        private CalculatorEntity calculatorEntityRemote;
+        CalculatorControl(){
+            calculatorEntityRemote = new CalculatorEntity();
+        }
+    
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            double num1 = Double.parseDouble(jTextFieldInput1.getText());
+            double num2 = Double.parseDouble(jTextFieldInput2.getText());
+            String command = e.getActionCommand();
+            if (command.equals("ADD")) {
+                calculatorEntityRemote.add(num1, num2);//message
+                double outputNum = calculatorEntityRemote.getResult();
+                jLabelOutput.setText("" + outputNum);
+            } else if (command.equals("SUB")) {
+                calculatorEntityRemote.sub(num1, num2);
+                double outputNum = calculatorEntityRemote.getResult();
+                jLabelOutput.setText("" + outputNum);
+            }
+    
+        }
+    
+    
+    }
 }
