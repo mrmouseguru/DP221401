@@ -1,4 +1,4 @@
-package buoi5.ecb;
+package buoi5.mvc;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -6,10 +6,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import buoi5.mvc.observer.Subcriber;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CalcualtorBoundary extends JFrame {
+public class CalcualtorView extends JFrame implements Subcriber {
 
     // field
     private String title;
@@ -17,11 +19,15 @@ public class CalcualtorBoundary extends JFrame {
     private JLabel jLabelInput1, jLabelInput2, jLabelOutput;
     private JTextField jTextFieldInput1, jTextFieldInput2;
     private JButton addButton, mulButton, subButton, divButton;
-    private CalculatorControl calculatorControlRemote;
+    private CalculatorController calculatorControlRemote;
+    private CalculatorModel calculatorModelRemote;
 
     // function ,method
-    CalcualtorBoundary() {
-        calculatorControlRemote = new CalculatorControl();
+    CalcualtorView() {
+        calculatorModelRemote = new CalculatorModel();
+        //dang doi tuong Subcriber voi Publisher
+        calculatorModelRemote.subcribe(this);
+        calculatorControlRemote = new CalculatorController();
         buildPanel();
         add(jPanel);
         title = "Frame Viewer";
@@ -53,29 +59,28 @@ public class CalcualtorBoundary extends JFrame {
 
     }
 
-    class CalculatorControl implements ActionListener {
-        private CalculatorEntity calculatorEntityRemote;
-        CalculatorControl(){
-            calculatorEntityRemote = new CalculatorEntity();
-        }
-    
+    class CalculatorController implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             double num1 = Double.parseDouble(jTextFieldInput1.getText());
             double num2 = Double.parseDouble(jTextFieldInput2.getText());
             String command = e.getActionCommand();
             if (command.equals("ADD")) {
-                calculatorEntityRemote.add(num1, num2);//message
-                double outputNum = calculatorEntityRemote.getResult();
+                calculatorModelRemote.add(num1, num2);//message
+                double outputNum = calculatorModelRemote.getResult();
                 jLabelOutput.setText("" + outputNum);
             } else if (command.equals("SUB")) {
-                calculatorEntityRemote.sub(num1, num2);
-                double outputNum = calculatorEntityRemote.getResult();
+                calculatorModelRemote.sub(num1, num2);
+                double outputNum = calculatorModelRemote.getResult();
                 jLabelOutput.setText("" + outputNum);
             }
     
         }
-    
-    
+    }
+
+    @Override
+    public void update() {
+        double result = calculatorModelRemote.getResult();
+        jLabelOutput.setText("" + result);
     }
 }
