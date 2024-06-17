@@ -3,6 +3,8 @@ package buoi5.mvc;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -21,9 +23,11 @@ public class CalcualtorView extends JFrame implements Subcriber {
     private JButton addButton, mulButton, subButton, divButton;
     private CalculatorController calculatorControlRemote;
     private CalculatorModel calculatorModelRemote;
+    private JMenuBar menuBarRemote;
 
     // function ,method
     CalcualtorView() {
+        buildMenu();
         calculatorModelRemote = new CalculatorModel();
         //dang doi tuong Subcriber voi Publisher
         calculatorModelRemote.subcribe(this);
@@ -32,6 +36,7 @@ public class CalcualtorView extends JFrame implements Subcriber {
         add(jPanel);
         title = "Frame Viewer";
         setTitle(title);
+        setJMenuBar(menuBarRemote);//dat menubar vào cửa số
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -59,6 +64,14 @@ public class CalcualtorView extends JFrame implements Subcriber {
 
     }
 
+    public void buildMenu() {
+        menuBarRemote = new JMenuBar();
+        JMenu calMenuRemote = new JMenu("Calculator");
+
+        //đặt menu vào MenuBar
+        menuBarRemote.add(calMenuRemote);
+    }
+
     class CalculatorController implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -77,7 +90,6 @@ public class CalcualtorView extends JFrame implements Subcriber {
     
         }
     }
-
     @Override
     public void update() {
         double result = calculatorModelRemote.getResult();
