@@ -23,7 +23,7 @@ public class CalcualtorView extends JFrame implements Subcriber {
     private JButton addButton, mulButton, subButton, divButton;
     private CalculatorController calculatorControlRemote;
     private CalculatorModel calculatorModelRemote;
-    private JMenuBar menuBarRemote;
+    private JMenuBar menuBarRemote = null;
 
     // function ,method
     CalcualtorView() {
@@ -36,7 +36,6 @@ public class CalcualtorView extends JFrame implements Subcriber {
         add(jPanel);
         title = "Frame Viewer";
         setTitle(title);
-        setJMenuBar(menuBarRemote);//dat menubar vào cửa số
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
@@ -65,9 +64,12 @@ public class CalcualtorView extends JFrame implements Subcriber {
     }
 
     public void buildMenu() {
+        //tạo object MenuBar
         menuBarRemote = new JMenuBar();
+        //đặt MenuBar vào Cửa sổ JFrame
+        setJMenuBar(menuBarRemote);
+        //
         JMenu calMenuRemote = new JMenu("Calculator");
-
         //đặt menu vào MenuBar
         menuBarRemote.add(calMenuRemote);
     }
