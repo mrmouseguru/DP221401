@@ -9,6 +9,7 @@ public class CalculatorModel extends Publisher{
     //method
     public void add(double a, double b) {
         this.result =  a + b;
+        changeState();
     }
 
     public void sub(double a, double b){
@@ -17,6 +18,10 @@ public class CalculatorModel extends Publisher{
 
     public double getResult() {
         return result;
+    }
+
+    private void changeState(){
+        notifySubcriber();
     }
 
 }

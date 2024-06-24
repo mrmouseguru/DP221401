@@ -9,6 +9,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import buoi5.mvc.command_processor.AddCommand;
+import buoi5.mvc.command_processor.Command;
+import buoi5.mvc.command_processor.CommandProcessor;
 import buoi5.mvc.observer.Subcriber;
 
 import java.awt.event.ActionEvent;
@@ -26,9 +29,11 @@ public class CalcualtorView extends JFrame implements Subcriber {
     private CalculatorModel calculatorModelRemote;
     private MenuController menuControllerRemote  = null;
     private JMenuBar menuBarRemote = null;
+    private CommandProcessor commandProcessorRemote = null;
 
     // function ,method
     CalcualtorView() {
+        commandProcessorRemote = CommandProcessor.makeCommandProcessor();
         calculatorModelRemote = new CalculatorModel();
         //dang doi tuong Subcriber voi Publisher
         calculatorModelRemote.subcribe(this);
@@ -92,8 +97,7 @@ public class CalcualtorView extends JFrame implements Subcriber {
             String command = e.getActionCommand();
             if (command.equals("ADD")) {
                 calculatorModelRemote.add(num1, num2);//message
-                double outputNum = calculatorModelRemote.getResult();
-                jLabelOutput.setText("" + outputNum);
+               
             } else if (command.equals("SUB")) {
                 calculatorModelRemote.sub(num1, num2);
                 double outputNum = calculatorModelRemote.getResult();
@@ -109,12 +113,12 @@ public class CalcualtorView extends JFrame implements Subcriber {
         public void actionPerformed(ActionEvent e) {
             double num1 = Double.parseDouble(jTextFieldInput1.getText());
             double num2 = Double.parseDouble(jTextFieldInput2.getText());
-
+            Command commandRemote = null;
             String command = e.getActionCommand();
             if (command.equals("ADD")) {
-                calculatorModelRemote.add(num1, num2);//message
-                double outputNum = calculatorModelRemote.getResult();
-                jLabelOutput.setText("" + outputNum);
+                commandRemote = new AddCommand(calculatorModelRemote, num1, num2);
+                //calculatorModelRemote.add(num1, num2);//message
+                commandProcessorRemote.execute(commandRemote);
             } else if (command.equals("SUB")) {
                 calculatorModelRemote.sub(num1, num2);
                 double outputNum = calculatorModelRemote.getResult();
