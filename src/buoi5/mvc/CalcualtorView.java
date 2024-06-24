@@ -24,15 +24,18 @@ public class CalcualtorView extends JFrame implements Subcriber {
     private JButton addButton, mulButton, subButton, divButton;
     private CalculatorController calculatorControlRemote;
     private CalculatorModel calculatorModelRemote;
+    private MenuController menuControllerRemote  = null;
     private JMenuBar menuBarRemote = null;
 
     // function ,method
     CalcualtorView() {
-        buildMenu();
         calculatorModelRemote = new CalculatorModel();
         //dang doi tuong Subcriber voi Publisher
         calculatorModelRemote.subcribe(this);
         calculatorControlRemote = new CalculatorController();
+        menuControllerRemote = new MenuController();
+        buildMenu();
+
         buildPanel();
         add(jPanel);
         title = "Frame Viewer";
@@ -75,6 +78,8 @@ public class CalcualtorView extends JFrame implements Subcriber {
         menuBarRemote.add(calMenuRemote);
         //ADD menu item
         JMenuItem addJMenuItemRemote = new JMenuItem("ADD");
+        //đối tượng phát ra command, event, actions
+        addJMenuItemRemote.addActionListener(menuControllerRemote);
         //đặt add menu item vào Menu
         calMenuRemote.add(addJMenuItemRemote);
     }
@@ -97,6 +102,28 @@ public class CalcualtorView extends JFrame implements Subcriber {
     
         }
     }
+    
+    class MenuController implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            double num1 = Double.parseDouble(jTextFieldInput1.getText());
+            double num2 = Double.parseDouble(jTextFieldInput2.getText());
+
+            String command = e.getActionCommand();
+            if (command.equals("ADD")) {
+                calculatorModelRemote.add(num1, num2);//message
+                double outputNum = calculatorModelRemote.getResult();
+                jLabelOutput.setText("" + outputNum);
+            } else if (command.equals("SUB")) {
+                calculatorModelRemote.sub(num1, num2);
+                double outputNum = calculatorModelRemote.getResult();
+                jLabelOutput.setText("" + outputNum);
+            }
+        }
+        
+    }
+
     @Override
     public void update() {
         double result = calculatorModelRemote.getResult();
