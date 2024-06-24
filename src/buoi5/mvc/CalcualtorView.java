@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -72,6 +73,10 @@ public class CalcualtorView extends JFrame implements Subcriber {
         JMenu calMenuRemote = new JMenu("Calculator");
         //đặt menu vào MenuBar
         menuBarRemote.add(calMenuRemote);
+        //ADD menu item
+        JMenuItem addJMenuItemRemote = new JMenuItem("ADD");
+        //đặt add menu item vào Menu
+        calMenuRemote.add(addJMenuItemRemote);
     }
 
     class CalculatorController implements ActionListener {
