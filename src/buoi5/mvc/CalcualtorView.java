@@ -121,8 +121,8 @@ public class CalcualtorView extends JFrame implements Subcriber {
                 commandProcessorRemote.execute(commandRemote);
             } else if (command.equals("SUB")) {
                 calculatorModelRemote.sub(num1, num2);
-                double outputNum = calculatorModelRemote.getResult();
-                jLabelOutput.setText("" + outputNum);
+                //double outputNum = calculatorModelRemote.getResult();
+               // jLabelOutput.setText("" + outputNum);
             }
         }
         
